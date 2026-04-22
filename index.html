@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>涂奕 — 广告设计师</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg: #080809;
+      --bg2: #0e0e10;
+      --text: #f0ede8;
+      --muted: rgba(240,237,232,0.45);
+      --accent: #f85a1b;
+      --border: rgba(255,255,255,0.07);
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; overflow-x: hidden; }
+    ::selection { background: var(--accent); color: #fff; }
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      background: 
+        linear-gradient(135deg, rgba(248,90,27,0.03) 0%, transparent 50%),
+        linear-gradient(225deg, rgba(248,90,27,0.05) 0%, transparent 50%),
+        var(--bg);
+    }
+    .hero-inner {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 60px;
+      position: relative;
+      z-index: 2;
+    }
+    .hero-label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+    }
+    .hero-name {
+      font-size: clamp(52px, 8vw, 96px);
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 16px;
+    }
+    .hero-title-line {
+      font-size: clamp(18px, 2.5vw, 28px);
+      font-weight: 300;
+      color: var(--muted);
+      margin-bottom: 48px;
+      line-height: 1.8;
+    }
+    .hero-title-line em {
+      font-style: italic;
+      color: var(--text);
+    }
+    .hero-sub {
+      font-size: clamp(14px, 1.6vw, 20px);
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .hero-tag {
+      font-size: 12px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 8px 18px;
+      border-radius: 100px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .hero-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    .hero-deco {
+      position: absolute;
+      right: -80px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      border: 1px solid rgba(248,90,27,0.08);
+      z-index: 1;
+    }
+    .hero-deco::before {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(248,90,27,0.06);
+    }
+    .hero-deco::after {
+      content: '';
+      position: absolute;
+      inset: 90px;
+      border-radius: 50%;
+      border: 1px solid rgba(248,90,27,0.04);
+    }
+
+    /* Hero 背景图 */
+    .hero-banner {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    .hero-banner-inner {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+    .hero-banner-inner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.5;
+      filter: brightness(0.7);
+    }
+    .hero-banner-inner::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, transparent 60%, var(--bg) 100%);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse { 0%,100% { opacity: 0.3; } 50% { opacity: 1; } }
+
+    /* ─── MARQUEE 跑马灯 ─── */
+    .marquee-section {
+      background: var(--bg);
+      padding: 60px 0;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+    .marquee-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .marquee-row {
+      display: flex;
+      width: max-content;
+      animation: marquee 80s linear infinite;
+    }
+    .marquee-row.row-2 {
+      animation-duration: 100s;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .marquee-item {
+      flex-shrink: 0;
+      height: 240px;
+      margin-right: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+    .marquee-item img {
+      height: 100%;
+      width: auto;
+      object-fit: contain;
+      transition: transform 0.5s;
+    }
+    .marquee-item:hover img {
+      transform: scale(1.05);
+    }
+
+    /* ─── SECTION HEADER ─── */
+    .section-header {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 60px 60px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+    .section-count {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 300;
+    }
+
+    /* ─── PROJECTS ─── */
+    .projects { max-width: 1200px; margin: 0 auto; padding: 0 60px; }
+
+    .project {
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 380px 1fr;
+      gap: 48px;
+      align-items: start;
+    }
+    .project:last-child { border-bottom: none; }
+
+    .project-info {
+      position: sticky;
+      top: 80px;
+    }
+    .project-num {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .project-name {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 700;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+    .project-desc {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .meta-tag {
+      font-size: 11px;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 5px 12px;
+      border-radius: 4px;
+    }
+
+    .project-gallery {
+      columns: 3;
+      column-gap: 10px;
+    }
+    .project-gallery .proj-img {
+      break-inside: avoid;
+      margin-bottom: 10px;
+      border-radius: 6px;
+    }
+
+    .proj-img {
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      background: var(--bg2);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.3s;
+      position: relative;
+    }
+    .proj-img:hover {
+      transform: translateY(-6px) scale(1.01);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+      z-index: 10;
+    }
+    .proj-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s;
+    }
+    .proj-img:hover img { transform: scale(1.04); }
+
+    /* 长图文件夹：只显示上半部分，底部渐变 */
+    .proj-img.long-img {
+      max-height: 600px;
+      overflow: hidden;
+      position: relative;
+    }
+    .proj-img.long-img img {
+      width: 100%;
+      max-height: 600px;
+      object-fit: cover;
+      object-position: top;
+    }
+    .proj-img.long-img::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: linear-gradient(to top, var(--bg) 0%, transparent 100%);
+      pointer-events: none;
+    }
+
+    /* ─── CONTACT ─── */
+    .contact {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 120px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      border-top: 1px solid var(--border);
+    }
+    .contact-left h2 {
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700;
+      letter-spacing: -2px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+    .contact-left h2 em { font-style: italic; color: var(--accent); }
+    .contact-left p { font-size: 15px; color: var(--muted); line-height: 1.8; font-weight: 300; }
+    .contact-right { display: flex; flex-direction: column; gap: 24px; justify-content: center; }
+    .contact-item { display: flex; flex-direction: column; gap: 6px; }
+    .contact-label { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
+    .contact-value { font-size: 18px; font-weight: 500; }
+    .contact-email {
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text);
+      border-bottom: 2px solid var(--accent);
+      padding-bottom: 2px;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .contact-email:hover { color: var(--accent); }
+
+    footer {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 60px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid var(--border);
+    }
+    .social-links { display: flex; gap: 20px; }
+    .social-links a { color: rgba(255,255,255,0.2); transition: color 0.2s; }
+    .social-links a:hover { color: var(--accent); }
+
+    /* ─── LIGHTBOX ─── */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(8,8,9,0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .lightbox.open { opacity: 1; visibility: visible; }
+    .lightbox img { max-width: 92vw; max-height: 90vh; object-fit: contain; border-radius: 8px; }
+    .lb-close {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .lb-close:hover { background: rgba(255,255,255,0.15); }
+
+    /* ─── SCROLL ANIMATIONS ─── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner, .section-header, .projects, .contact, footer { padding-left: 24px; padding-right: 24px; }
+      .project { grid-template-columns: 1fr; gap: 32px; }
+      .project-info { position: static; }
+      .contact { grid-template-columns: 1fr; gap: 48px; }
+      .hero-deco { display: none; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 12px; }
+      footer { flex-direction: column; gap: 16px; }
+      .marquee-item { width: 140px; height: 200px; }
+    }
+    @media (max-width: 600px) {
+      .project-gallery { columns: 2; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-banner">
+    <div class="hero-banner-inner">
+      <img src="assets/projects/bg.jpg" alt="">
+    </div>
+  </div>
+  <div class="hero-deco"></div>
+  <div class="hero-inner">
+    <div class="hero-label">Visual Designer · 广告视觉</div>
+    <h1 class="hero-name">作品集</h1>
+    <p class="hero-title-line"><span style="color: var(--accent);">涂奕</span> 专注金融科技领域的视觉设计<br><span class="hero-sub">从事广告设计多年，专注于金融科技行业的产品视觉设计与品牌传播。擅长将复杂的金融概念转化为直观、有吸引力的视觉语言，帮助产品与用户建立有效沟通。</span></p>
+    <div class="hero-tags">
+      <span class="hero-tag">广告设计</span>
+      <span class="hero-tag">落地页长图</span>
+      <span class="hero-tag">品牌视觉</span>
+      <span class="hero-tag">开机图设计</span>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- ─── MARQUEE 跑马灯 ─── -->
+<section class="marquee-section">
+  <div class="marquee-container">
+    <!-- 第一行 -->
+    <div class="marquee-row row-1">
+      <div class="marquee-item"><img src="assets/projects/top/nonstop-splash-2-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/biotech-splash-1.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/invest-future-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-deposit.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-open-ad-1560.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/swing-king-ad-2.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy7-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy-rank-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fusion-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-multitrack-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-sign-1080-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/yaxia-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/high-dividend-splash-1844.jpg" alt="" loading="lazy"></div>
+      <!-- 复制一份实现无缝循环 -->
+      <div class="marquee-item"><img src="assets/projects/top/nonstop-splash-2-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/biotech-splash-1.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/invest-future-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-deposit.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-open-ad-1560.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/swing-king-ad-2.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy7-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy-rank-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fusion-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-multitrack-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-sign-1080-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/yaxia-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/high-dividend-splash-1844.jpg" alt="" loading="lazy"></div>
+    </div>
+    <!-- 第二行 -->
+    <div class="marquee-row row-2">
+      <div class="marquee-item"><img src="assets/projects/top/high-dividend-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/yaxia-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-sign-1080-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-multitrack-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fusion-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy-rank-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy7-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/swing-king-ad-2.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-open-ad-1560.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-deposit.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/invest-future-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/biotech-splash-1.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/nonstop-splash-2-1844.jpg" alt="" loading="lazy"></div>
+      <!-- 复制一份实现无缝循环 -->
+      <div class="marquee-item"><img src="assets/projects/top/high-dividend-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/yaxia-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-sign-1080-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/quant-multitrack-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fusion-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy-rank-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/strategy7-splash.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/swing-king-ad-2.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-open-ad-1560.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/fangzheng-deposit.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/invest-future-splash-1844.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/biotech-splash-1.jpg" alt="" loading="lazy"></div>
+      <div class="marquee-item"><img src="assets/projects/top/nonstop-splash-2-1844.jpg" alt="" loading="lazy"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PROJECTS ─── -->
+<div class="section-header reveal">
+  <h2 class="section-title">Selected Work</h2>
+  <span class="section-count">10 Projects</span>
+</div>
+
+<div class="projects">
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">01</div>
+      <h3 class="project-name">1量化投资</h3>
+      <p class="project-desc">量化投资多赛道系列，涵盖创新药、半导体、黄金、汽车等方向。用视觉把复杂的东西说清楚，也挺好玩的。</p>
+      <div class="project-meta">
+        <span class="meta-tag">开机图</span><span class="meta-tag">29张</span><span class="meta-tag">多赛道</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/01-quant/ratio2to1-v2.jpg" alt="2比1-2.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/ratio2to1.jpg" alt="2比1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/biotech-splash-1.jpg" alt="创新药-开机-1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/semiconductor-splash.jpg" alt="半导体-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/rebound-splash-1844.jpg" alt="反弹机会1844-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/fundamental1-splash-1844.jpg" alt="基本面1号1844-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/smallcap-splash-1560.jpg" alt="小盘-开机1560.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/layout-splash-1080x1844.jpg" alt="布局开机1080X1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/pullback-splash.jpg" alt="强势回踩-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/invest-future-splash-1844.jpg" alt="投资未来-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/auto-splash-1560.jpg" alt="汽车-开机1560.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/shortterm-splash-1844-copy.jpg" alt="短线策略开机1844的副本.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy3-splash-1844.jpg" alt="策略3-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy4-splash.jpg" alt="策略4-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy5-splash.jpg" alt="策略5-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy6-splash-1844.jpg" alt="策略6-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy7-splash.jpg" alt="策略7-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy8-splash-1844.jpg" alt="策略8-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy8-popup.jpg" alt="策略8-弹窗.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy9-1844.jpg" alt="策略9-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/strategy-rank2-splash.jpg" alt="策略榜2-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/quant-sign-ad-splash-1844.jpg" alt="签约量化-开机广告1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/fusion-splash-1844.jpg" alt="融合-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/quant-multitrack-splash-1844.jpg" alt="量化-多赛道-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/quant-sign-1080-1844.jpg" alt="量化签约1080-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/quant-trend-ad-splash-1844.jpg" alt="量化风口-开机广告1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/yaxia-splash-1844.jpg" alt="雅下-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/high-dividend-splash-1844.jpg" alt="高股息开机-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/01-quant/gold-splash-1560.jpg" alt="黄金-开机1560.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">02</div>
+      <h3 class="project-name">2指标广告</h3>
+      <p class="project-desc">几个核心指标的推广图设计，Level-2、涨停跟踪、波段王……把数据做得好看一点，让人不那么想划走。</p>
+      <div class="project-meta">
+        <span class="meta-tag">开机图</span><span class="meta-tag">14张</span><span class="meta-tag">数据可视化</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/02-indicators/10years.jpg" alt="10年.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/1yuan-level2-splash-1844.jpg" alt="1元level2开机-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/ace-splash-1844.jpg" alt="ACE开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/nonstop-splash-2-1844.jpg" alt="不打烊开机-2-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/nonstop-splash-3-1844.jpg" alt="不打烊开机-3-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/sixsword-ad.jpg" alt="六剑合一广告.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/4d-splash-1844.jpg" alt="四维开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/futures-t0-1844.jpg" alt="期货T+0-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/swing-king-ad-1.jpg" alt="波段王广告1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/swing-king-ad-2.jpg" alt="波段王广告2.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/limit-track-splash-1844.jpg" alt="涨停跟踪1844-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/xiangcai-splash.jpg" alt="湘财-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/strategy-rank-splash.jpg" alt="策略榜-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/02-indicators/newyear-nonstop-splash-1844.jpg" alt="过年不打烊-开机1844.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">03</div>
+      <h3 class="project-name">3大智慧VIP</h3>
+      <p class="project-desc">VIP专属开机图，主打省心省钱。大气沉稳这两个字不好拿捏，但这次效果还不错。</p>
+      <div class="project-meta">
+        <span class="meta-tag">开机图</span><span class="meta-tag">3张</span><span class="meta-tag">高端定位</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/03-vip/hotmoney-splash-1844.jpg" alt="游资1844-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/03-vip/easylife-splash-1844.jpg" alt="省心-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/03-vip/savemoney-splash-1844.jpg" alt="省钱省心-开机1844.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">04</div>
+      <h3 class="project-name">4合作方广告</h3>
+      <p class="project-desc">给好几家券商做的广告，国泰、湘财、方正……各家调性不太一样，得在统一的框架里做出差异。</p>
+      <div class="project-meta">
+        <span class="meta-tag">开机图</span><span class="meta-tag">12张</span><span class="meta-tag">多品牌</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/04-partners/broker-finance-splash-1844.jpg" alt="券商理财-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/gtja-splash-1560.jpg" alt="国泰君安-开机1560.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/gtja-open-header.jpg" alt="国泰开户-头部.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/gtja-haitong-popup.jpg" alt="国泰海通-弹窗.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/seize-splash-1080x844.jpg" alt="把握开机-1080X844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/first-step-splash-1844.jpg" alt="投资第一步-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/fangzheng-deposit.jpg" alt="方正入金.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/fangzheng-open-ad-1560.jpg" alt="方正开户广告-1560.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/xiangcai-splash-521-1844.jpg" alt="湘财-开机521-1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/xiangcai-quant-popup.jpg" alt="湘财量化弹窗.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/market-start-splash.jpg" alt="行情启动-开机.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/04-partners/market-open-ad-1080x844.jpg" alt="行情开户广告-1080X844.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">05</div>
+      <h3 class="project-name">5APP</h3>
+      <p class="project-desc">PC端和手机端都有，尺寸差异挺大的。做的时候主要在想：怎么在方寸之间塞进足够的信息还能好看。</p>
+      <div class="project-meta">
+        <span class="meta-tag">开机图</span><span class="meta-tag">9张</span><span class="meta-tag">多端适配</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/05-app/pc-splash-01.jpg" alt="PC开机-01.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/pc-splash-02.jpg" alt="PC开机-02.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/pc-splash-03.jpg" alt="PC开机-03.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/pc-splash-04.jpg" alt="PC开机-04.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/wangz-copy.jpg" alt="wangz 拷贝.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/lobster-white-splash-1844.jpg" alt="小龙虾-白色-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/lobster-red-splash-1844.jpg" alt="小龙虾-红色-开机1844.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/background.jpg" alt="背景.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/05-app/horse-year-open-splash-1844.jpg" alt="马年开户-开机1844.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">06</div>
+      <h3 class="project-name">6长图落地页</h3>
+      <p class="project-desc">落地页长图是这批作品里做得最多的，一共42张。DeepSeek、黄金、汽车策略、融合……各种主题都有涉及。信息多的时候怎么让它看起来不乱，是最花心思的地方。</p>
+      <div class="project-meta">
+        <span class="meta-tag">落地页长图</span><span class="meta-tag">42张</span><span class="meta-tag">信息设计</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/landing-01.jpg" alt="1.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/1yuan-level2-landing.jpg" alt="1元level-2.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/landing-02.jpg" alt="2.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/landing-03.jpg" alt="3.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/landing-04.jpg" alt="4.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/pc-open-landing.jpg" alt="PC开户.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/deep.jpg" alt="deep.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/deepseek.jpg" alt="deepseek.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/info-terminal-web11.jpg" alt="信息终端-官网11.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/pharma-strategy.jpg" alt="医药策略.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/semiconductor-strategy.jpg" alt="半导体策略.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/rebound-revised.jpg" alt="反弹-修改.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/4d-tactics.jpg" alt="四维战法.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/gtja-haitong-open.jpg" alt="国泰海通继续开户.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/fundamental.jpg" alt="基本面.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-vip-8features.jpg" alt="大智慧VIP-8大功能免费.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-vip-save-orange.jpg" alt="大智慧VIP-省钱-橘.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-vip-auto-trade.jpg" alt="大智慧VIP-自动交易.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-vip-free-red.jpg" alt="大智慧VIP-自由-红.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-vip-black.jpg" alt="大智慧VIPpsd-黑.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/dzh-app.jpg" alt="大智慧app.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/pingan-smart.jpg" alt="平安智慧宝.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/open-guide.jpg" alt="开户指南psd.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/pullback-strong.jpg" alt="强势回踩.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/pullback-strong2.jpg" alt="强势回踩2.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/mobile-quant-open.jpg" alt="手机量化开户.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/beginner-guide.jpg" alt="新手指南.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/new-page.jpg" alt="新页面.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/fangzheng-deposit-ad.jpg" alt="方正入金广告页.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/fangzheng-sign.jpg" alt="方正签约.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/auto-strategy.jpg" alt="汽车策略.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/consumer-track2.jpg" alt="消费跟踪2.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/limit-track.jpg" alt="涨停跟踪.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/qingfeng-001.jpg" alt="清风001.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/apply-final.jpg" alt="申请--最终.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/power.jpg" alt="电力.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/shrimp-ad-long.jpg" alt="虾-广告长图.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/fusion.jpg" alt="融合.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/capital-flow.jpg" alt="资金流冲击.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/yaxia-hydro.jpg" alt="雅下水电站.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/high-dividend.jpg" alt="高股息.jpg" loading="lazy"></div>
+      <div class="proj-img long-img"><img src="assets/projects/06-landing/gold.jpg" alt="黄金.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">07</div>
+      <h3 class="project-name">7应用推广图</h3>
+      <p class="project-desc">应用市场推广图，横版为主。主要是APP功能介绍和问答广场的配图，做的时候想让它看起来不像传统Banner那么无聊。</p>
+      <div class="project-meta">
+        <span class="meta-tag">推广图</span><span class="meta-tag">8张</span><span class="meta-tag">横版</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/07-promo/h-03-02.jpg" alt="h-03-02.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/h-03-03.jpg" alt="h-03-03.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/h-1280x720.jpg" alt="h-1280X720.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/h2-1280x720-1.jpg" alt="h2-1280X720-1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/h2-1280x720-3.jpg" alt="h2-1280X720-3.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/group-1.jpg" alt="组 1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/qa-plaza-3.jpg" alt="问答广场3.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/07-promo/qa-plaza-4.jpg" alt="问答广场4.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">08</div>
+      <h3 class="project-name">8策略大赛</h3>
+      <p class="project-desc">年度策略大赛物料，海报、开机图、广告位都有。做这种活动类的东西，竞技感和专业度要兼顾，还是挺有挑战的。</p>
+      <div class="project-meta">
+        <span class="meta-tag">品牌活动</span><span class="meta-tag">6张</span><span class="meta-tag">全链路</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/08-contest/splash-3.jpg" alt="开机3.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/08-contest/splash-4.jpg" alt="开机4.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/08-contest/splash-6-copy.jpg" alt="开机6 拷贝.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/08-contest/poster.jpg" alt="海报.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/08-contest/material-2.jpg" alt="素材2.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/08-contest/homepage-ad-2.jpg" alt="首页广告位2.jpg" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">09</div>
+      <h3 class="project-name">9慧信问答推广-火车站</h3>
+      <p class="project-desc">线下推广物料，火车站场景。线上广告做多了，线下物料是另一种思路——怎么让行色匆匆的人愿意多看一眼，是门学问。</p>
+      <div class="project-meta">
+        <span class="meta-tag">线下推广</span><span class="meta-tag">9张</span><span class="meta-tag">场景营销</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/09-station/dzh-qa.jpg" alt="大智慧问答.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-bag.jpg" alt="火车站-袋子.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-photo-1.jpg" alt="火车站实景1.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-photo-2.jpg" alt="火车站实景2.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-photo-3.jpg" alt="火车站实景3.jpg.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-seat-1280x800.jpg" alt="火车站座位-1280X800.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-render-1.png" alt="火车站效果图1.png" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-render-2.png" alt="火车站效果图2.png" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/09-station/station-render-3.png" alt="火车站效果图3.png" loading="lazy"></div>
+    </div>
+  </div>
+  <div class="project reveal">
+    <div class="project-info">
+      <div class="project-num">10</div>
+      <h3 class="project-name">10发布会</h3>
+      <p class="project-desc">发布会的全套物料，邀请函、议程、主视觉。红色主题不好做，容易俗，但这次还是压住了。</p>
+      <div class="project-meta">
+        <span class="meta-tag">发布会</span><span class="meta-tag">5张</span><span class="meta-tag">品牌活动</span>
+      </div>
+    </div>
+    <div class="project-gallery">
+      <div class="proj-img "><img src="assets/projects/10-launch/vip-app-showcase-1242x2688.jpg" alt="VIP--APP展示1242X2688.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/10-launch/launch-banner-1380x512.jpg" alt="lQLPJxE_cdX-sMTNAgDNBWSwCnd49a1uPWcE4rQ_m0CVAA_1380_512.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/10-launch/red-theme.jpg" alt="红色.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/10-launch/agenda.jpg" alt="议程.jpg" loading="lazy"></div>
+      <div class="proj-img "><img src="assets/projects/10-launch/invitation.jpg" alt="邀请函.jpg" loading="lazy"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── CONTACT ─── -->
+<section class="contact">
+  <div class="contact-left">
+    <h2>Let's work<br><em>together</em></h2>
+    <p>合作或者单纯想聊聊设计都可以找我。下面是能找到我的地方。</p>
+  </div>
+  <div class="contact-right">
+    <div class="contact-item">
+      <span class="contact-label">Email</span>
+      <a href="mailto:20601256@QQ.com" class="contact-email">20601256@QQ.com</a>
+    </div>
+    <div class="contact-item">
+      <span class="contact-label">手机</span>
+      <span class="contact-value">15921621094</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 涂奕 · All rights reserved</span>
+  <div class="social-links">
+    <a href="#">Behance</a>
+    <a href="#">Dribbble</a>
+  </div>
+</footer>
+
+<!-- ─── LIGHTBOX ─── -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">✕</button>
+  <img id="lbImg" src="" alt="">
+</div>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Lightbox
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  document.querySelectorAll('.proj-img').forEach(item => {
+    item.addEventListener('click', () => {
+      lbImg.src = item.querySelector('img').src;
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+  document.getElementById('lbClose').addEventListener('click', () => { lb.classList.remove('open'); document.body.style.overflow = ''; });
+  lb.addEventListener('click', e => { if (e.target === lb) { lb.classList.remove('open'); document.body.style.overflow = ''; } });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; } });
+</script>
+</body>
+</html>
